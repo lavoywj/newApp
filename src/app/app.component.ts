@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+declare var device;
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
    this.loggedIn = false;
+      document.addEventListener('deviceready', onDeviceReady, false);
+      function onDeviceReady() {
+          alert(device.platform);
+      }
   }
 
     get userjwt(): any {
