@@ -1,0 +1,87 @@
+<h3>Welcome home, {{username}}</h3>
+<br><br>
+<button mat-button type="button" routerLink="/Search">Search Books</button>
+<button mat-button type="button" routerLink="/Add">Add a Book</button>
+<button mat-button type="button" (click)="manageBooks()">Manage my books</button>
+<button mat-button type="button" routerLink="/Settings">Account Settings</button>
+<button mat-button type="button" (click)="logout()">Logout</button>
+<button mat-button type="button" (click)="interestedBooks()">Show Books I'm Interested In</button>
+
+<div *ngIf="showMemberBooks">
+  <br>
+  <mat-card>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <table mat-table [dataSource]= data1>
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef> ISBN </th>
+        <td mat-cell *matCellDef="let element"> {{element.Isbn}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.Author}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+        <td mat-cell *matCellDef="let element" class="mat-column-right">
+          <button mat-button color="primary" routerLink="/Edit/{{element.unid}}">Edit</button>
+          <button mat-button color="warn" (click)="deleteBook(element.unid)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+</div>
+
+<div *ngIf="deleteSuccess">
+  Book Deleted!
+</div>
+
+<div *ngIf="interested">
+  <br>
+  <mat-card>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <table mat-table [dataSource]= interestedMemberBooks>
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef> ISBN </th>
+        <td mat-cell *matCellDef="let element"> {{element.Isbn}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.Author}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+        <td mat-cell *matCellDef="let element" class="mat-column-right">
+          <button mat-button color="warn" (click)="deleteIntBook(element.unid)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+</div>
