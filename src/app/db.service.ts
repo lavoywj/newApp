@@ -130,22 +130,22 @@ export class DBService {
         });
     }
     countInterested(uname: String) {
-        return this.http.put('http://localhost:4000/client/count', {
+        return this.http.put('http://152.117.218.112:4000/client/count', {
             uname: uname
         });
     }
     getCountInt(uname: String) {
-        return this.http.put('http://localhost:4000/client/getCount', {
+        return this.http.put('http://152.117.218.112:4000/client/getCount', {
             uname: uname
         });
     }
     showIntUser(uname: String) {
-        return this.http.put('http://localhost:4000/client/showIntUser', {
+        return this.http.put('http://152.117.218.112:4000/client/showIntUser', {
             uname: uname
         });
     }
     updateCount(uname: String) {
-        return this.http.put('http://localhost:4000/client/updateCount', {
+        return this.http.put('http://152.117.218.112:4000/client/updateCount', {
             uname: uname
         });
     }
