@@ -99,6 +99,12 @@ export class DBService {
             uname: uname
         });
     }
+    updatepassword(password: String, uname: String) {
+        return this.http.put('http://152.117.218.112:4000/client/updatepassword', {
+            password: password,
+            uname: uname
+        });
+    }
     getMember(uname: String) {
         return this.http.put('http://152.117.218.112:4000/client/getmember', {
             uname: uname
@@ -121,6 +127,26 @@ export class DBService {
     getBookDetails(unid: String) {
         return this.http.put('http://152.117.218.112:4000/client/getBookDetails', {
             unid: unid
+        });
+    }
+    countInterested(uname: String) {
+        return this.http.put('http://localhost:4000/client/count', {
+            uname: uname
+        });
+    }
+    getCountInt(uname: String) {
+        return this.http.put('http://localhost:4000/client/getCount', {
+            uname: uname
+        });
+    }
+    showIntUser(uname: String) {
+        return this.http.put('http://localhost:4000/client/showIntUser', {
+            uname: uname
+        });
+    }
+    updateCount(uname: String) {
+        return this.http.put('http://localhost:4000/client/updateCount', {
+            uname: uname
         });
     }
 }

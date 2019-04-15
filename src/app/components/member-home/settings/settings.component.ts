@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { DBService } from '../../../db.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatTabGroup } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
 
@@ -17,6 +17,8 @@ export class SettingsComponent implements OnInit {
     updatenameform: FormGroup;
     phoneform: boolean;
     updatephonenumform: FormGroup;
+    passwordform: boolean;
+    updatepasswordform: FormGroup;
     info: boolean;
     data: {
         Uname: String,
@@ -29,35 +31,41 @@ export class SettingsComponent implements OnInit {
 
 
     constructor(private db: DBService, private fb: FormBuilder, private router: Router, private snackBar: MatSnackBar) {
-      this.updatemajorform = this.fb.group({
-          major: ['', Validators.required]
+        this.updatemajorform = this.fb.group({
+            major: ['', Validators.required]
 
-      });
-
-      this.updatenameform = this.fb.group({
-          name: ['', Validators.required]
-
-      });
-
-      this.updatephonenumform = this.fb.group({
-          phone: ['', Validators.required]
-
-      });
-  }
-
-  ngOnInit() {
-    if(sessionStorage.getItem('user-jwt') == null) {
-        this.snackBar.open('Please login to view this page', 'OK', {
-          duration: 3000
         });
-        this.router.navigate(['/Home']);
-      }
 
-      this.majorform = false;
-      this.nameform = false;
-      this.phoneform = false;
-      this.info = false;
-  }
+        this.updatenameform = this.fb.group({
+            name: ['', Validators.required]
+
+        });
+
+        this.updatephonenumform = this.fb.group({
+            phone: ['', Validators.required]
+
+        });
+
+        this.updatepasswordform = this.fb.group({
+            password: ['', Validators.required]
+
+        });
+    }
+
+    ngOnInit() {
+        if (sessionStorage.getItem('user-jwt') == null) {
+            this.snackBar.open('Please login to view this page', 'OK', {
+                duration: 3000
+            });
+            this.router.navigate(['/Home']);
+        }
+
+        this.majorform = false;
+        this.nameform = false;
+        this.phoneform = false;
+        this.passwordform = false;
+        this.info = false;
+    }
 
     displaymajorform() {
         this.ngOnInit();
@@ -113,6 +121,24 @@ export class SettingsComponent implements OnInit {
         });
     }
 
+    displaypasswordform() {
+        this.ngOnInit();
+        this.passwordform = true;
+    }
+
+    updatepassword(password) {
+        const uname = sessionStorage.getItem('userid');
+        this.db.updatepassword(password, uname).subscribe((res: any) => {
+            if (res.affectedRows > 0) {
+                this.snackBar.open('password updated', 'OK', {
+                    duration: 3000
+                });
+                this.updatepasswordform.reset();
+            }
+            console.log(res);
+        });
+    }
+
     displayinfo() {
         this.ngOnInit();
         const uname = sessionStorage.getItem('userid');
@@ -124,8 +150,5 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    cancel() {
-        this.ngOnInit();
-    }
-
+    cancel() { this.ngOnInit(); }
 }
