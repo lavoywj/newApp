@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'app-add-book',
-  templateUrl: './add-book.component.html',
-  styleUrls: ['./add-book.component.css']
+    selector: 'app-add-book',
+    templateUrl: './add-book.component.html',
+    styleUrls: ['./add-book.component.css']
 })
 export class AddBookComponent implements OnInit {
 
@@ -21,34 +21,35 @@ export class AddBookComponent implements OnInit {
             subject: '',
             description: '',
             oprice: '',
-            cprice: ''
+            cprice: '',
+            url: ' '
         });
     }
 
-  ngOnInit() { 
-    if(sessionStorage.getItem('user-jwt') == null) {
-        this.snackBar.open('Please login to view this page', 'OK', {
-          duration: 3000
-        });
-        this.router.navigate(['/Home']);
-      }
-  }
-
-  get userid(): any {
-      return sessionStorage.getItem('userid');
-    }
-
-  createBook(isbn, title, author, description, subject, oprice, cprice) {
-      this.ngOnInit();
-      this.db.createBook(isbn, title, author, description, subject, oprice, cprice, this.userid).subscribe((res: any) => {
-        console.log(res);
-        if (res.affectedRows > 0) {
-            this.snackBar.open('Book added successfully', 'OK', {
+    ngOnInit() {
+        if (sessionStorage.getItem('user-jwt') == null) {
+            this.snackBar.open('Please login to view this page', 'OK', {
                 duration: 3000
             });
+            this.router.navigate(['/Home']);
         }
-      });
-      this.addBookForm.reset();
+    }
+
+    get userid(): any {
+        return sessionStorage.getItem('userid');
+    }
+
+    createBook(isbn, title, author, description, subject, oprice, cprice, url) {
+        this.ngOnInit();
+        this.db.createBook(isbn, title, author, description, subject, oprice, cprice, url, this.userid).subscribe((res: any) => {
+            console.log(res);
+            if (res.affectedRows > 0) {
+                this.snackBar.open('Book added successfully', 'OK', {
+                    duration: 3000
+                });
+            }
+        });
+        this.addBookForm.reset();
     }
 
 }
