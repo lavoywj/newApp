@@ -64,9 +64,10 @@ export class DBService {
             unid: unid
         });
     }
-    deleteIntBook(unid: String) {
+    deleteIntBook(unid: String, uname: String) {
         return this.http.put('http://152.117.218.112:4000/client/DeleteIntBook', {
-            unid: unid
+            unid: unid,
+            uname: uname
         });
     }
     interested(member: String, book: String) {

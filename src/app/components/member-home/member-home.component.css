@@ -14,7 +14,7 @@ table {
     text-align: center;
     position: absolute;
     right: 90px;
-    top: 3px;
+    top: 148px;
     font-size: 14px;
 }
 .mat-cell{
@@ -24,17 +24,17 @@ table {
     background-color: rgba(0, 0, 255, 0.3);
     position: absolute;
     right: 10px;
-    top: 5px;
+    top: 150px;
 }
 .buttonNoti {
     background-color: rgba(0, 0, 255, 0.3);
     position: absolute;
     right: 100px;
-    top: 5px;
+    top: 150px;
 }
-h3 {
+/*h3 {
     position:relative;
-}
+}*/
 .menu {
     text-align: center;
 }
