@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material';
 })
 export class MemberHomeComponent implements OnInit {
 
-    interested: boolean;
     interestedMemberBooks: {
         Isbn: String,
         Title: String,
@@ -23,17 +22,22 @@ export class MemberHomeComponent implements OnInit {
     noti = 0;
     showNoti: boolean;
     count: boolean;
-
+    interested: boolean;
     member: any;
-    showMemberBooks: boolean;
+    search: boolean;
+    memberBooks: boolean;
+    addBook: boolean;
+    settings: boolean;
+
     displayedColumns = ['isbn', 'title', 'author', 'actions'];
+    displayedColumns1 = ['uname', 'title'];
+
     data1: {
         Isbn: String,
         Title: String,
         Author: String
     };
 
-    displayedColumns1 = ['uname', 'title'];
     data2: {
         uname: String,
         Title: String
@@ -71,10 +75,19 @@ export class MemberHomeComponent implements OnInit {
                 }
             });
         });
-        this.showMemberBooks = false;
+        this.db.getMember(this.userid).subscribe((res: any) => {
+            console.log(res[0]["name"]);
+            if(sessionStorage.getItem('userid') !== res[0]["name"]) {
+                sessionStorage.setItem('username', res[0]["name"]);
+            }
+        });
+        this.memberBooks = false;
         this.interested = false;
         this.count = false;
         this.showNoti = false;
+        this.search = false;
+        this.addBook = false;
+        this.settings = false;
     }
 
     get userid(): any {
@@ -84,9 +97,9 @@ export class MemberHomeComponent implements OnInit {
         return sessionStorage.getItem('username');
     }
 
-    manageBooks() {
+    showMemberBooks() {
         this.ngOnInit();
-        this.showMemberBooks = true;
+        this.memberBooks = true;
         this.db.getMemberBooks(this.userid).subscribe((res: any) => {
             console.log(res);
             this.data1 = res;
@@ -101,7 +114,7 @@ export class MemberHomeComponent implements OnInit {
                 this.snackBar.open('Book deleted successfully', 'OK', {
                     duration: 3000
                 });
-                this.manageBooks();
+                this.showMemberBooks();
             }
         });
     }
@@ -119,7 +132,7 @@ export class MemberHomeComponent implements OnInit {
         });
     }
 
-    interestedBooks() {
+    showInterestedBooks() {
         this.ngOnInit();
         this.db.interestedMember(this.userid).subscribe((res: any) => {
             this.interestedMemberBooks = res;
@@ -136,7 +149,7 @@ export class MemberHomeComponent implements OnInit {
     }
 
     updateNoti() {
-        this.showMemberBooks = false;
+        this.memberBooks = false;
         this.interested = false;
         this.db.showIntUser(this.userid).subscribe((res: any) => {
             console.log(res);
@@ -149,5 +162,23 @@ export class MemberHomeComponent implements OnInit {
             }
         })
         this.noti = 0;
+    }
+
+    showSearch() {
+        this.ngOnInit();
+
+        this.search = true;
+    }
+
+    showAddBook() {
+        this.ngOnInit();
+
+        this.addBook = true;
+    }
+
+    showSettings() {
+        this.ngOnInit();
+
+        this.settings = true;
     }
 }
